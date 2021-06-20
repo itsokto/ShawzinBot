@@ -1,12 +1,16 @@
-﻿using Melanchall.DryWetMidi.Core;
-using System.Linq;
+﻿using System.Text.Json.Serialization;
 
 namespace ShawzinBot.Models
 {
-    public class GitVersion
-    {
-        public string tag_name { get; set; }
-        public bool draft { get; set; }
-        public bool prerelease { get; set; }
-    }
+	public class GitVersion
+	{
+		[JsonPropertyName("tag_name")]
+		public string TagName { get; set; }
+
+		[JsonPropertyName("draft")]
+		public bool Draft { get; set; }
+
+		[JsonPropertyName("prerelease")]
+		public bool Prerelease { get; set; }
+	}
 }
