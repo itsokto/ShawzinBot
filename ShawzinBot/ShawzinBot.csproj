@@ -15,7 +15,7 @@
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="Dapplo.Windows.Input" Version="0.11.29" />
     <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="5.2.0" />
+    <PackageReference Include="Melanchall.DryWetMidi" Version="5.2.1" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Shawzin.ico" />
