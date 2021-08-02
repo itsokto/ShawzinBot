@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Timers;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Caliburn.Micro;
@@ -12,6 +11,8 @@ using Melanchall.DryWetMidi.Devices;
 using Melanchall.DryWetMidi.Interaction;
 using Microsoft.Win32;
 using ShawzinBot.Models;
+using ShawzinBot.Services;
+using ShawzinBot.WinApi;
 using InputDevice = Melanchall.DryWetMidi.Devices.InputDevice;
 
 namespace ShawzinBot.ViewModels
@@ -28,9 +29,9 @@ namespace ShawzinBot.ViewModels
 		private string _playPauseIcon = "Play";
 		private string _scale = "Scale: Chromatic";
 
-		private BindableCollection<MidiInputModel> _midiInputs = new BindableCollection<MidiInputModel>();
-		private BindableCollection<MidiTrackModel> _midiTracks = new BindableCollection<MidiTrackModel>();
-		private BindableCollection<MidiSpeedModel> _midiSpeeds = new BindableCollection<MidiSpeedModel>();
+		private BindableCollection<MidiInputModel> _midiInputs = new();
+		private BindableCollection<MidiTrackModel> _midiTracks = new();
+		private BindableCollection<MidiSpeedModel> _midiSpeeds = new();
 		private MidiInputModel _selectedMidiInput;
 		private MidiSpeedModel _selectedMidiSpeed;
 
@@ -39,7 +40,7 @@ namespace ShawzinBot.ViewModels
 		private bool _playThroughSpeakers;
 		private bool _ignoreSliderChange;
 
-		private string[] _scaleArray = { "Chromatic", "Hexatonic", "Major", "Minor", "Hirajoshi", "Phrygian", "Yo", "Pentatonic Minor", "Pentatonic Major" };
+		private readonly string[] _scaleArray = { "Chromatic", "Hexatonic", "Major", "Minor", "Hirajoshi", "Phrygian", "Yo", "Pentatonic Minor", "Pentatonic Major" };
 
 		private System.Collections.Generic.IEnumerable<TrackChunk> _midiTrackChunks;
 		private TrackChunk _firstTrack;
@@ -55,12 +56,12 @@ namespace ShawzinBot.ViewModels
 
 		#region Public Variables
 
-		public MidiFile midiFile;
-		public TempoMap tempoMap;
-		public Playback playback;
-		public InputDevice inputDevice;
+		private MidiFile _midiFile;
+		private TempoMap _tempoMap;
+		private Playback _playback;
+		private InputDevice _inputDevice;
 
-		public static bool reloadPlayback;
+		private static bool _reloadPlayback;
 
 		#endregion
 
@@ -162,18 +163,18 @@ namespace ShawzinBot.ViewModels
 			{
 				_songSlider = value;
 				NotifyOfPropertyChange(() => SongSlider);
-				if (!_ignoreSliderChange && playback != null)
+				if (!_ignoreSliderChange && _playback != null)
 				{
-					if (playback.IsRunning)
+					if (_playback.IsRunning)
 					{
-						playback.Stop();
+						_playback.Stop();
 						PlayPauseIcon = "Play";
 					}
 
 					TimeSpan time = TimeSpan.FromSeconds(_songSlider);
 
 					CurrentTime = time.ToString("m\\:ss");
-					playback.MoveToTime((MetricTimeSpan) time);
+					_playback.MoveToTime((MetricTimeSpan) time);
 				}
 
 				_ignoreSliderChange = false;
@@ -216,14 +217,14 @@ namespace ShawzinBot.ViewModels
 			set
 			{
 				_selectedMidiInput = value;
-				inputDevice?.Dispose();
+				_inputDevice?.Dispose();
 
 				if (value?.DeviceName != null && value.DeviceName != "None")
 				{
-					inputDevice = InputDevice.GetByName(value.DeviceName);
-					inputDevice.EventReceived += OnNoteEvent;
-					inputDevice.StartEventsListening();
-					ActionManager.OnSongPlay();
+					_inputDevice = InputDevice.GetByName(value.DeviceName);
+					_inputDevice.EventReceived += OnNoteEvent;
+					_inputDevice.StartEventsListening();
+					ActionsService.OnSongPlay();
 				}
 
 				NotifyOfPropertyChange(() => SelectedMidiInput);
@@ -248,9 +249,9 @@ namespace ShawzinBot.ViewModels
 				_selectedMidiSpeed = value;
 				NotifyOfPropertyChange(() => SelectedMidiSpeed);
 
-				if (value?.Speed != null && playback != null)
+				if (value?.Speed != null && _playback != null)
 				{
-					playback.Speed = value.Speed;
+					_playback.Speed = value.Speed;
 				}
 			}
 		}
@@ -338,25 +339,25 @@ namespace ShawzinBot.ViewModels
 			CloseFile();
 			MidiTracks.Clear();
 
-			midiFile = MidiFile.Read(openFileDialog.FileName);
+			_midiFile = MidiFile.Read(openFileDialog.FileName);
 			SongName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
 
-			tempoMap = midiFile.GetTempoMap();
+			_tempoMap = _midiFile.GetTempoMap();
 
-			TimeSpan midiFileDuration = midiFile.GetDuration<MetricTimeSpan>();
+			TimeSpan midiFileDuration = _midiFile.GetDuration<MetricTimeSpan>();
 			TotalTime = midiFileDuration.ToString("m\\:ss");
 			MaximumTime = midiFileDuration.TotalSeconds;
 			UpdateSlider(0);
 			CurrentTime = "0:00";
-			_midiTrackChunks = midiFile.GetTrackChunks().ToList();
+			_midiTrackChunks = _midiFile.GetTrackChunks().ToList();
 
 			if (_midiTrackChunks.Count() > 1)
 			{
 				_firstTrack = _midiTrackChunks.FirstOrDefault();
-				midiFile.Chunks.Remove(_firstTrack);
+				_midiFile.Chunks.Remove(_firstTrack);
 				MidiTracks.Add(new MidiTrackModel(_firstTrack, true));
 
-				foreach (TrackChunk track in midiFile.GetTrackChunks())
+				foreach (TrackChunk track in _midiFile.GetTrackChunks())
 				{
 					MidiTracks.Add(new MidiTrackModel(track));
 				}
@@ -364,22 +365,22 @@ namespace ShawzinBot.ViewModels
 			else
 			{
 				_firstTrack = _midiTrackChunks.FirstOrDefault();
-				midiFile.Chunks.Remove(_firstTrack);
+				_midiFile.Chunks.Remove(_firstTrack);
 				MidiTracks.Add(new MidiTrackModel(_firstTrack, true));
 			}
 		}
 
 		public void CloseFile()
 		{
-			if (playback != null)
+			if (_playback != null)
 			{
-				playback.Stop();
-				PlaybackCurrentTimeWatcher.Instance.RemovePlayback(playback);
-				playback.Dispose();
-				playback = null;
+				_playback.Stop();
+				PlaybackCurrentTimeWatcher.Instance.RemovePlayback(_playback);
+				_playback.Dispose();
+				_playback = null;
 			}
 
-			midiFile = null;
+			_midiFile = null;
 			MidiTracks.Clear();
 
 			PlayPauseIcon = "Play";
@@ -391,55 +392,55 @@ namespace ShawzinBot.ViewModels
 
 		public void PlayPause()
 		{
-			if (midiFile == null || MaximumTime == 0d) return;
-			if (playback == null || reloadPlayback)
+			if (_midiFile == null || MaximumTime == 0d) return;
+			if (_playback == null || _reloadPlayback)
 			{
-				if (playback != null)
+				if (_playback != null)
 				{
-					playback.Stop();
-					_playTime = playback.GetCurrentTime(TimeSpanType.Midi);
-					playback.Dispose();
-					playback = null;
+					_playback.Stop();
+					_playTime = _playback.GetCurrentTime(TimeSpanType.Midi);
+					_playback.Dispose();
+					_playback = null;
 					PlayPauseIcon = "Play";
 				}
 
-				midiFile.Chunks.Clear();
-				midiFile.Chunks.Add(_firstTrack);
+				_midiFile.Chunks.Clear();
+				_midiFile.Chunks.Add(_firstTrack);
 
 				foreach (MidiTrackModel trackModel in MidiTracks)
 				{
 					if (trackModel.IsChecked)
 					{
-						midiFile.Chunks.Add(trackModel.Track);
+						_midiFile.Chunks.Add(trackModel.Track);
 					}
 				}
 
-				playback = midiFile.GetPlayback();
-				playback.Speed = SelectedMidiSpeed.Speed;
+				_playback = _midiFile.GetPlayback();
+				_playback.Speed = SelectedMidiSpeed.Speed;
 				if (PlayThroughSpeakers)
 				{
 					_device = OutputDevice.GetByName("Microsoft GS Wavetable Synth");
-					playback.OutputDevice = _device;
+					_playback.OutputDevice = _device;
 				}
 
-				playback.MoveToTime(_playTime);
-				playback.Finished += (s, e) =>
+				_playback.MoveToTime(_playTime);
+				_playback.Finished += (s, e) =>
 				{
 					CloseFile();
 				};
 
-				PlaybackCurrentTimeWatcher.Instance.AddPlayback(playback, TimeSpanType.Metric);
+				PlaybackCurrentTimeWatcher.Instance.AddPlayback(_playback, TimeSpanType.Metric);
 				PlaybackCurrentTimeWatcher.Instance.CurrentTimeChanged += OnTick;
 				PlaybackCurrentTimeWatcher.Instance.Start();
 
-				playback.EventPlayed += OnNoteEvent;
-				reloadPlayback = false;
+				_playback.EventPlayed += OnNoteEvent;
+				_reloadPlayback = false;
 			}
 
-			if (playback.IsRunning)
+			if (_playback.IsRunning)
 			{
 				PlayPauseIcon = "Play";
-				playback.Stop();
+				_playback.Stop();
 			}
 			else if (PlayPauseIcon == "Pause")
 			{
@@ -450,7 +451,7 @@ namespace ShawzinBot.ViewModels
 			{
 				PlayPauseIcon = "Pause";
 
-				ActionManager.OnSongPlay();
+				ActionsService.OnSongPlay();
 				_playTimer = new Timer();
 				_playTimer.Interval = 100;
 				_playTimer.Elapsed += PlayTimerElapsed;
@@ -460,18 +461,18 @@ namespace ShawzinBot.ViewModels
 
 		private void PlayTimerElapsed(object sender, ElapsedEventArgs e)
 		{
-			if (ActionManager.IsWindowFocused("Warframe") || PlayThroughSpeakers)
+			if (User32.IsWindowFocused("Warframe") || PlayThroughSpeakers)
 			{
-				playback.Start();
+				_playback.Start();
 				_playTimer.Dispose();
 			}
 		}
 
 		public void Previous()
 		{
-			if (playback != null)
+			if (_playback != null)
 			{
-				playback.MoveToStart();
+				_playback.MoveToStart();
 				UpdateSlider(0);
 				CurrentTime = "0:00";
 			}
@@ -528,8 +529,8 @@ namespace ShawzinBot.ViewModels
 					if (note != null && note.Velocity <= 0) return;
 
 					//Check if the user has tabbed out of warframe, and stop playback to avoid Scale issues
-					if (!(ActionManager.PlayNote(note, EnableVibrato, TransposeNotes) || PlayThroughSpeakers)) PlayPause();
-					UpdateScale(ActionManager._activeScale);
+					if (!(ActionsService.PlayNote(note, EnableVibrato, TransposeNotes) || PlayThroughSpeakers)) PlayPause();
+					UpdateScale(ActionsService.ActiveScale);
 					return;
 				default:
 					return;
@@ -543,7 +544,7 @@ namespace ShawzinBot.ViewModels
 			var note = e.Event as NoteOnEvent;
 			if (note != null && note.Velocity <= 0) return;
 
-			ActionManager.PlayNote(note, EnableVibrato, TransposeNotes);
+			ActionsService.PlayNote(note, EnableVibrato, TransposeNotes);
 		}
 
 		private void UpdateSlider(double value)
