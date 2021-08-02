@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Dapplo.Windows.Input.Enums;
-using Dapplo.Windows.Input.Keyboard;
+using WindowsInput;
+using WindowsInput.Native;
 using Melanchall.DryWetMidi.Core;
 using Timer = System.Threading.Timer;
 
@@ -279,24 +279,26 @@ namespace ShawzinBot
 		private static readonly Dictionary<ShawzinFret, VirtualKeyCode> ShawzinFrets = new()
 		{
 			{ ShawzinFret.None, VirtualKeyCode.None }, // No Fret
-			{ ShawzinFret.Sky, VirtualKeyCode.Left }, // Sky Fret
-			{ ShawzinFret.Earth, VirtualKeyCode.Down }, // Earth Fret
-			{ ShawzinFret.Water, VirtualKeyCode.Right }, // Water Fret
+			{ ShawzinFret.Sky, VirtualKeyCode.LEFT }, // Sky Fret
+			{ ShawzinFret.Earth, VirtualKeyCode.DOWN }, // Earth Fret
+			{ ShawzinFret.Water, VirtualKeyCode.RIGHT }, // Water Fret
 		};
 
 		private static readonly Dictionary<ShawzinString, VirtualKeyCode> ShawzinStrings = new()
 		{
-			{ ShawzinString.S1, VirtualKeyCode.Key1 }, // 1st String
-			{ ShawzinString.S2, VirtualKeyCode.Key2 }, // 2nd String
-			{ ShawzinString.S3, VirtualKeyCode.Key3 }, // 3rd String
+			{ ShawzinString.S1, VirtualKeyCode.VK_1 }, // 1st String
+			{ ShawzinString.S2, VirtualKeyCode.VK_2 }, // 2nd String
+			{ ShawzinString.S3, VirtualKeyCode.VK_3 }, // 3rd String
 		};
 
 
 		private static readonly Dictionary<ShawzinSpecial, VirtualKeyCode> ShawzinSpecials = new()
 		{
-			{ ShawzinSpecial.Vibrato, VirtualKeyCode.Space }, // Vibrato
-			{ ShawzinSpecial.Scale, VirtualKeyCode.Tab }, // Scale change
+			{ ShawzinSpecial.Vibrato, VirtualKeyCode.SPACE }, // Vibrato
+			{ ShawzinSpecial.Scale, VirtualKeyCode.TAB }, // Scale change
 		};
+		
+		private static readonly InputSimulator InputSimulator = new();
 
 		private const int ScaleSize = 9;
 
@@ -368,19 +370,19 @@ namespace ShawzinBot
 			var stringKey = ShawzinStrings[shawzinNote.String];
 
 
-			KeyboardInputGenerator.KeyUp(_fretKey);
+			InputSimulator.Keyboard.KeyUp(_fretKey);
 			_fretKey = ShawzinFrets[shawzinNote.Fret];
 
-			KeyboardInputGenerator.KeyUp(_vibratoKey);
+			InputSimulator.Keyboard.KeyUp(_vibratoKey);
 			_vibratoKey = ShawzinSpecials[ShawzinSpecial.Vibrato];
 
 			if (shawzinNote.Vibrato && enableVibrato)
 			{
 				KeyHold(_vibratoKey, TimeSpan.FromMilliseconds(100));
-				KeyboardInputGenerator.KeyDown(_vibratoKey);
+				InputSimulator.Keyboard.KeyDown(_vibratoKey);
 			}
 
-			KeyboardInputGenerator.KeyDown(_fretKey);
+			InputSimulator.Keyboard.KeyDown(_fretKey);
 			KeyTap(stringKey);
 		}
 
@@ -411,7 +413,7 @@ namespace ShawzinBot
 		/// <param name="key"> The key to be tapped.</param>
 		public static void KeyTap(VirtualKeyCode key)
 		{
-			KeyboardInputGenerator.KeyPresses(key);
+			InputSimulator.Keyboard.KeyPress(key);
 		}
 
 		/// <summary>
@@ -421,8 +423,8 @@ namespace ShawzinBot
 		/// <param name="time"> The amount of time the key should be held for.</param>
 		private static void KeyHold(VirtualKeyCode key, TimeSpan time)
 		{
-			KeyboardInputGenerator.KeyDown(key);
-			var timer = new Timer(_ => KeyboardInputGenerator.KeyUp(key), null, time, Timeout.InfiniteTimeSpan);
+			InputSimulator.Keyboard.KeyDown(key);
+			var timer = new Timer(_ => InputSimulator.Keyboard.KeyUp(key), null, time, Timeout.InfiniteTimeSpan);
 		}
 
 		public static bool OnSongPlay()
