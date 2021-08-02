@@ -321,7 +321,7 @@ namespace ShawzinBot
 		private static extern IntPtr GetForegroundWindow();
 
 		[DllImport("user32.dll")]
-		static extern void SwitchToThisWindow(IntPtr hWnd, bool fUnknown);
+		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		/// <summary>
 		/// Play a MIDI note inside Warframe.
@@ -430,7 +430,7 @@ namespace ShawzinBot
 		public static bool OnSongPlay()
 		{
 			_warframeWindow = FindWindow("Warframe");
-			SwitchToThisWindow(_warframeWindow, true);
+			SetForegroundWindow(_warframeWindow);
 			var hWnd = GetForegroundWindow();
 			return !_warframeWindow.Equals(IntPtr.Zero) && hWnd.Equals(_warframeWindow);
 		}
