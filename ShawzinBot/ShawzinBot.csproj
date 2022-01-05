@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWpf>true</UseWpf>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -10,7 +10,8 @@
     <PublishUrl>publish\</PublishUrl>
     <PublishSingleFile>true</PublishSingleFile>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <SelfContained>False</SelfContained>
+    <SelfContained>false</SelfContained>
+    <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -18,9 +19,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
-    <PackageReference Include="H.InputSimulator" Version="1.1.0" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="5.2.1" />
+    <PackageReference Include="H.InputSimulator" Version="1.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Melanchall.DryWetMidi" Version="6.0.1" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Shawzin.ico" />

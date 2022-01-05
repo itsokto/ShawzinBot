@@ -3,6 +3,19 @@ using WindowsInput.Native;
 
 namespace ShawzinBot.Services
 {
+	public enum ShawzinScale
+	{
+		Chromatic,
+		Hexatonic,
+		Major,
+		Minor,
+		Hirajoshi,
+		Phrygian,
+		Yo,
+		PentatonicMinor,
+		PentatonicMajor,
+	}
+
 	public enum ShawzinFret
 	{
 		None,
@@ -26,7 +39,7 @@ namespace ShawzinBot.Services
 
 	public struct ShawzinNote
 	{
-		public int Scale { get; set; }
+		public ShawzinScale Scale { get; set; }
 
 		public ShawzinFret Fret { get; set; }
 
@@ -34,16 +47,15 @@ namespace ShawzinBot.Services
 
 		public bool Vibrato { get; set; }
 	}
-	
-    public class ShawzinService
-    {
-        		// Dictionary of note IDs and a series of ints. In order: Scale, Fret, Key, Vibrato
+
+	public class ShawzinService
+	{
 		public static readonly Dictionary<int, ShawzinNote> Notes = new()
 		{
 			{
 				48, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.None,
 					String = ShawzinString.S1
 				}
@@ -51,7 +63,7 @@ namespace ShawzinBot.Services
 			{
 				49, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.None,
 					String = ShawzinString.S2
 				}
@@ -59,7 +71,7 @@ namespace ShawzinBot.Services
 			{
 				50, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.None,
 					String = ShawzinString.S3
 				}
@@ -67,7 +79,7 @@ namespace ShawzinBot.Services
 			{
 				51, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Sky,
 					String = ShawzinString.S1
 				}
@@ -75,7 +87,7 @@ namespace ShawzinBot.Services
 			{
 				52, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Sky,
 					String = ShawzinString.S2
 				}
@@ -83,7 +95,7 @@ namespace ShawzinBot.Services
 			{
 				53, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Sky,
 					String = ShawzinString.S3
 				}
@@ -91,7 +103,7 @@ namespace ShawzinBot.Services
 			{
 				54, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S1
 				}
@@ -99,7 +111,7 @@ namespace ShawzinBot.Services
 			{
 				55, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S2
 				}
@@ -107,7 +119,7 @@ namespace ShawzinBot.Services
 			{
 				56, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S3
 				}
@@ -115,7 +127,7 @@ namespace ShawzinBot.Services
 			{
 				57, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S1
 				}
@@ -123,7 +135,7 @@ namespace ShawzinBot.Services
 			{
 				58, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S2
 				}
@@ -131,7 +143,7 @@ namespace ShawzinBot.Services
 			{
 				59, new ShawzinNote
 				{
-					Scale = 0,
+					Scale = ShawzinScale.Chromatic,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
@@ -139,7 +151,7 @@ namespace ShawzinBot.Services
 			{
 				60, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Sky,
 					String = ShawzinString.S3
 				}
@@ -147,7 +159,7 @@ namespace ShawzinBot.Services
 			{
 				61, new ShawzinNote
 				{
-					Scale = 4,
+					Scale = ShawzinScale.Hirajoshi,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S1
 				}
@@ -155,7 +167,7 @@ namespace ShawzinBot.Services
 			{
 				62, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S1
 				}
@@ -163,7 +175,7 @@ namespace ShawzinBot.Services
 			{
 				63, new ShawzinNote
 				{
-					Scale = 1,
+					Scale = ShawzinScale.Hexatonic,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S2
 				}
@@ -171,7 +183,7 @@ namespace ShawzinBot.Services
 			{
 				64, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S2
 				}
@@ -179,7 +191,7 @@ namespace ShawzinBot.Services
 			{
 				65, new ShawzinNote
 				{
-					Scale = 1,
+					Scale = ShawzinScale.Hexatonic,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S3
 				}
@@ -187,7 +199,7 @@ namespace ShawzinBot.Services
 			{
 				66, new ShawzinNote
 				{
-					Scale = 1,
+					Scale = ShawzinScale.Hexatonic,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S1
 				}
@@ -195,7 +207,7 @@ namespace ShawzinBot.Services
 			{
 				67, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S3
 				}
@@ -203,7 +215,7 @@ namespace ShawzinBot.Services
 			{
 				68, new ShawzinNote
 				{
-					Scale = 6,
+					Scale = ShawzinScale.Yo,
 					Fret = ShawzinFret.Earth,
 					String = ShawzinString.S3
 				}
@@ -211,7 +223,7 @@ namespace ShawzinBot.Services
 			{
 				69, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S1
 				}
@@ -219,7 +231,7 @@ namespace ShawzinBot.Services
 			{
 				70, new ShawzinNote
 				{
-					Scale = 1,
+					Scale = ShawzinScale.Hexatonic,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
@@ -227,7 +239,7 @@ namespace ShawzinBot.Services
 			{
 				71, new ShawzinNote
 				{
-					Scale = 4,
+					Scale = ShawzinScale.Hirajoshi,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S2,
 					Vibrato = true
@@ -236,7 +248,7 @@ namespace ShawzinBot.Services
 			{
 				72, new ShawzinNote
 				{
-					Scale = 4,
+					Scale = ShawzinScale.Hirajoshi,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S2
 				}
@@ -244,7 +256,7 @@ namespace ShawzinBot.Services
 			{
 				73, new ShawzinNote
 				{
-					Scale = 4,
+					Scale = ShawzinScale.Hirajoshi,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
@@ -252,7 +264,7 @@ namespace ShawzinBot.Services
 			{
 				74, new ShawzinNote
 				{
-					Scale = 8,
+					Scale = ShawzinScale.PentatonicMajor,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
@@ -260,7 +272,7 @@ namespace ShawzinBot.Services
 			{
 				75, new ShawzinNote
 				{
-					Scale = 7,
+					Scale = ShawzinScale.PentatonicMinor,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
@@ -269,24 +281,24 @@ namespace ShawzinBot.Services
 
 		public static readonly Dictionary<ShawzinFret, VirtualKeyCode> Frets = new()
 		{
-			{ ShawzinFret.None, VirtualKeyCode.None }, // No Fret
-			{ ShawzinFret.Sky, VirtualKeyCode.LEFT }, // Sky Fret
-			{ ShawzinFret.Earth, VirtualKeyCode.DOWN }, // Earth Fret
-			{ ShawzinFret.Water, VirtualKeyCode.RIGHT }, // Water Fret
+			{ShawzinFret.None, VirtualKeyCode.None}, // No Fret
+			{ShawzinFret.Sky, VirtualKeyCode.LEFT}, // Sky Fret
+			{ShawzinFret.Earth, VirtualKeyCode.DOWN}, // Earth Fret
+			{ShawzinFret.Water, VirtualKeyCode.RIGHT}, // Water Fret
 		};
 
 		public static readonly Dictionary<ShawzinString, VirtualKeyCode> Strings = new()
 		{
-			{ ShawzinString.S1, VirtualKeyCode.VK_1 }, // 1st String
-			{ ShawzinString.S2, VirtualKeyCode.VK_2 }, // 2nd String
-			{ ShawzinString.S3, VirtualKeyCode.VK_3 }, // 3rd String
+			{ShawzinString.S1, VirtualKeyCode.VK_1}, // 1st String
+			{ShawzinString.S2, VirtualKeyCode.VK_2}, // 2nd String
+			{ShawzinString.S3, VirtualKeyCode.VK_3}, // 3rd String
 		};
 
 
 		public static readonly Dictionary<ShawzinSpecial, VirtualKeyCode> Specials = new()
 		{
-			{ ShawzinSpecial.Vibrato, VirtualKeyCode.SPACE }, // Vibrato
-			{ ShawzinSpecial.Scale, VirtualKeyCode.TAB }, // Scale change
+			{ShawzinSpecial.Vibrato, VirtualKeyCode.SPACE}, // Vibrato
+			{ShawzinSpecial.Scale, VirtualKeyCode.TAB}, // Scale change
 		};
-    }
+	}
 }
