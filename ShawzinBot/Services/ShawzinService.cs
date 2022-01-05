@@ -151,49 +151,49 @@ namespace ShawzinBot.Services
 			{
 				60, new ShawzinNote
 				{
-					Scale = ShawzinScale.PentatonicMajor,
-					Fret = ShawzinFret.Sky,
-					String = ShawzinString.S3
+					Scale = ShawzinScale.Phrygian,
+					Fret = ShawzinFret.Earth,
+					String = ShawzinString.S2
 				}
 			}, // C4
 			{
 				61, new ShawzinNote
 				{
-					Scale = ShawzinScale.Hirajoshi,
+					Scale = ShawzinScale.Phrygian,
 					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S1
+					String = ShawzinString.S3
 				}
 			}, // C#4
 			{
 				62, new ShawzinNote
 				{
-					Scale = ShawzinScale.PentatonicMajor,
+					Scale = ShawzinScale.Minor,
 					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S1
+					String = ShawzinString.S3
 				}
 			}, // D4
 			{
 				63, new ShawzinNote
 				{
-					Scale = ShawzinScale.Hexatonic,
-					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S2
+					Scale = ShawzinScale.Minor,
+					Fret = ShawzinFret.Water,
+					String = ShawzinString.S1
 				}
 			}, // D#4
 			{
 				64, new ShawzinNote
 				{
-					Scale = ShawzinScale.PentatonicMajor,
-					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S2
+					Scale = ShawzinScale.Major,
+					Fret = ShawzinFret.Water,
+					String = ShawzinString.S1
 				}
 			}, // E4
 			{
 				65, new ShawzinNote
 				{
-					Scale = ShawzinScale.Hexatonic,
-					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S3
+					Scale = ShawzinScale.Major,
+					Fret = ShawzinFret.Water,
+					String = ShawzinString.S2
 				}
 			}, // F4
 			{
@@ -207,9 +207,9 @@ namespace ShawzinBot.Services
 			{
 				67, new ShawzinNote
 				{
-					Scale = ShawzinScale.PentatonicMajor,
-					Fret = ShawzinFret.Earth,
-					String = ShawzinString.S3
+					Scale = ShawzinScale.Hexatonic,
+					Fret = ShawzinFret.Water,
+					String = ShawzinString.S2
 				}
 			}, // G4
 			{
@@ -272,7 +272,7 @@ namespace ShawzinBot.Services
 			{
 				75, new ShawzinNote
 				{
-					Scale = ShawzinScale.PentatonicMinor,
+					Scale = ShawzinScale.Yo,
 					Fret = ShawzinFret.Water,
 					String = ShawzinString.S3
 				}
