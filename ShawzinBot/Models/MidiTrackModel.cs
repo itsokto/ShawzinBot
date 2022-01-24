@@ -15,11 +15,9 @@ namespace ShawzinBot.Models
             TrackName = track.Events.OfType<SequenceTrackNameEvent>().FirstOrDefault()?.Text;
         }
 
-        public MidiTrackModel(TrackChunk track, bool isChecked)
+        public MidiTrackModel(TrackChunk track, bool isChecked) : this(track)
         {
-            Track = track;
-            TrackName = track.Events.OfType<SequenceTrackNameEvent>().FirstOrDefault()?.Text;
-            IsChecked = isChecked;
+	        IsChecked = isChecked;
         }
     }
 }
