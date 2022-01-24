@@ -1,32 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <OutputType>WinExe</OutputType>
-    <UseWpf>true</UseWpf>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <ApplicationIcon>Shawzin.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PublishUrl>publish\</PublishUrl>
-    <PublishSingleFile>true</PublishSingleFile>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <SelfContained>false</SelfContained>
-    <PublishReadyToRun>true</PublishReadyToRun>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>None</DebugType>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
-    <PackageReference Include="H.InputSimulator" Version="1.2.1" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="6.0.1" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Shawzin.ico" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <OutputType>WinExe</OutputType>
+        <UseWpf>true</UseWpf>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <ApplicationIcon>Shawzin.ico</ApplicationIcon>
+    </PropertyGroup>
+    <PropertyGroup>
+        <PublishUrl>publish\</PublishUrl>
+        <PublishSingleFile>true</PublishSingleFile>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <SelfContained>false</SelfContained>
+        <PublishReadyToRun>true</PublishReadyToRun>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Caliburn.Micro" Version="4.0.173"/>
+        <PackageReference Include="H.InputSimulator" Version="1.2.1"/>
+        <PackageReference Include="MaterialDesignThemes" Version="4.3.0"/>
+        <PackageReference Include="Melanchall.DryWetMidi" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.261602">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Shawzin.ico"/>
+    </ItemGroup>
 </Project>

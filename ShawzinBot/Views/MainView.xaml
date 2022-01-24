@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:ShawzinBot.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:viewmodels="clr-namespace:ShawzinBot.ViewModels"
@@ -45,43 +43,39 @@
                     HorizontalAlignment="Left" VerticalAlignment="Center"
                     Margin="10,5" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Background="{x:Null}"
                     BorderBrush="{x:Null}">
-                <materialDesign:PackIcon Kind="FolderOpen" Width="20" Height="20" 
-                                         HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                         Foreground="{StaticResource PrimaryLinear}">
-                </materialDesign:PackIcon>
+                <materialDesign:PackIcon Kind="FolderOpen" Width="20" Height="20"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                                         Foreground="{StaticResource PrimaryLinear}" />
             </Button>
 
             <materialDesign:PopupBox StaysOpen="True" Margin="40 5">
                 <materialDesign:PopupBox.ToggleContent>
                     <materialDesign:PackIcon Kind="Cog" Width="20" Height="20"
-                                             Foreground="{StaticResource PrimaryLinear}">
-                    </materialDesign:PackIcon>
+                                             Foreground="{StaticResource PrimaryLinear}" />
                 </materialDesign:PopupBox.ToggleContent>
                 <Grid cal:Bind.Model="{Binding}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Grid.Row="0" Grid.Column="0" Kind="GuitarAcoustic"
                                              Margin="10 0"
-                                             VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </materialDesign:PackIcon>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Scale" VerticalAlignment="Center"></TextBlock>
+                                             VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Scale" VerticalAlignment="Center" />
                     <TextBlock Grid.Row="0" Grid.Column="2" x:Name="Scale"
                                Margin="10 0"
                                VerticalAlignment="Center" HorizontalAlignment="Right" />
                     <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="SineWave"
                                              Margin="10 0"
-                                             VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </materialDesign:PackIcon>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Vibrato" VerticalAlignment="Center"></TextBlock>
+                                             VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Vibrato" VerticalAlignment="Center" />
                     <ToggleButton Grid.Row="1" Grid.Column="2" x:Name="EnableVibrato"
                                   Margin="10 0"
                                   VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -89,18 +83,16 @@
                                   ToolTip="Default ToggleButton Style" />
                     <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="MusicNoteOutline"
                                              Margin="10 0"
-                                             VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </materialDesign:PackIcon>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Transpose notes" VerticalAlignment="Center"></TextBlock>
+                                             VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Transpose notes" VerticalAlignment="Center" />
                     <ToggleButton Grid.Row="2" Grid.Column="2" x:Name="TransposeNotes"
                                   Margin="10 0"
                                   Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                   VerticalAlignment="Center" HorizontalAlignment="Right" />
                     <materialDesign:PackIcon Grid.Row="3" Grid.Column="0" Kind="PlaySpeed"
                                              Margin="10 0"
-                                             VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </materialDesign:PackIcon>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Playback speed" VerticalAlignment="Center"></TextBlock>
+                                             VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Playback speed" VerticalAlignment="Center" />
                     <ComboBox Grid.Row="3" Grid.Column="2" x:Name="MidiSpeeds"
                               Margin="10 0"
                               SelectedItem="{Binding SelectedMidiSpeed, Mode=TwoWay}"
@@ -116,16 +108,14 @@
                     Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Background="{x:Null}"
                     BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Close" Width="20" Height="20" HorizontalAlignment="Center"
-                                         VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}">
-                </materialDesign:PackIcon>
+                                         VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}" />
             </Button>
             <Button x:Name="MinimizeProgram" Click="OnMinimizeProgram" HorizontalAlignment="Right"
                     VerticalAlignment="Center" Width="20" Height="20" Margin="40,5"
                     Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Background="{x:Null}"
                     BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Minus" Width="20" Height="20" HorizontalAlignment="Center"
-                                         VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}">
-                </materialDesign:PackIcon>
+                                         VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}" />
             </Button>
         </Grid>
 
@@ -150,8 +140,7 @@
                         Background="{x:Null}" BorderBrush="{x:Null}">
                     <materialDesign:PackIcon Kind="SkipPrevious" Width="20" Height="20"
                                              HorizontalAlignment="Center" VerticalAlignment="Center"
-                                             Foreground="{StaticResource PrimaryLinear}">
-                    </materialDesign:PackIcon>
+                                             Foreground="{StaticResource PrimaryLinear}" />
                 </Button>
 
                 <Button x:Name="PlayPause" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40"
@@ -163,25 +152,24 @@
                     </Button.Effect>
                     <materialDesign:PackIcon Kind="{Binding Path=PlayPauseIcon}" Width="40" Height="40"
                                              HorizontalAlignment="Center" VerticalAlignment="Center"
-                                             Foreground="{StaticResource PrimaryLinear}">
-                    </materialDesign:PackIcon>
+                                             Foreground="{StaticResource PrimaryLinear}" />
                 </Button>
 
                 <Button x:Name="Next" HorizontalAlignment="Right" VerticalAlignment="Center" Width="20" Height="20"
                         Margin="30,0" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                         Background="{x:Null}" BorderBrush="{x:Null}">
                     <materialDesign:PackIcon Kind="SkipNext" Width="20" Height="20" HorizontalAlignment="Center"
-                                             VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}">
-                    </materialDesign:PackIcon>
+                                             VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}" />
                 </Button>
             </Grid>
             <Grid Grid.Row="2" VerticalAlignment="Center" Margin="0 0 0 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding CurrentTime, StringFormat=m\\:ss}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7 0" />
+                <TextBlock Text="{Binding CurrentTime, StringFormat=m\\:ss}" HorizontalAlignment="Left"
+                           VerticalAlignment="Center" Margin="7 0" />
 
                 <Slider Grid.Column="1" x:Name="SongSlider" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                         Orientation="Horizontal" Maximum="{Binding MaximumTime}">
@@ -193,7 +181,8 @@
                     </Slider.Foreground>
                 </Slider>
 
-                <TextBlock Grid.Column="2" Text="{Binding TotalTime, StringFormat=m\\:ss}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                <TextBlock Grid.Column="2" Text="{Binding TotalTime, StringFormat=m\\:ss}" HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
                            Margin="7,0" />
             </Grid>
             <Grid Grid.Row="3" Margin="0 0 0 10">
@@ -211,8 +200,7 @@
                         Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                         Background="{x:Null}" BorderBrush="{x:Null}">
                     <materialDesign:PackIcon Kind="Reload" Width="30" Height="30" HorizontalAlignment="Center"
-                                             VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}">
-                    </materialDesign:PackIcon>
+                                             VerticalAlignment="Center" Foreground="{StaticResource PrimaryLinear}" />
                 </Button>
 
             </Grid>

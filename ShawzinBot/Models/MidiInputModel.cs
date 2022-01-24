@@ -1,12 +1,11 @@
-﻿namespace ShawzinBot.Models
-{
-    public class MidiInputModel
-    {
-        public string DeviceName { get; private set; }
+﻿namespace ShawzinBot.Models;
 
-        public MidiInputModel(string deviceName)
-        {
-            DeviceName = deviceName;
-        }
-    }
+public class MidiInputModel
+{
+	public string DeviceName { get; private set; }
+
+	public MidiInputModel(string deviceName)
+	{
+		DeviceName = deviceName;
+	}
 }

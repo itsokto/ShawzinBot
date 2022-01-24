@@ -1,11 +1,10 @@
 ﻿using System.Windows;
 
-namespace ShawzinBot
+namespace ShawzinBot;
+
+/// <summary>
+/// Lógica de interacción para App.xaml
+/// </summary>
+public partial class App : Application
 {
-    /// <summary>
-    /// Lógica de interacción para App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-    }
 }
